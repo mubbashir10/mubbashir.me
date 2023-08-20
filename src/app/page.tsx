@@ -1,6 +1,111 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function Home() {
+  const [blogPostsRaw, setBlogPostsRaw] = useState<any[]>([]);
+  const [startIndex, setStartIndex] = useState(0);
+
   const defaultGradient = `bg-gradient-to-r from-orange-500 to-violet-600`;
   const hoverGradient = `hover:from-orange-600 hover:to-violet-700`;
+
+  const handleNext = () => {
+    if (startIndex + 4 < blogPostsRaw.length) {
+      setStartIndex(startIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (startIndex > 0) {
+      setStartIndex(startIndex - 1);
+    }
+  };
+
+  const visiblePosts = blogPostsRaw.slice(startIndex, startIndex + 4);
+
+  const blogPosts = (
+    <section className="my-10">
+      <h1 className="flex items-center text-2xl">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          className="w-8 h-8 text-orange-600"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
+          />
+        </svg>
+        Recent Blog Posts
+      </h1>
+      <div className="flex">
+        {visiblePosts.map((article) => (
+          <div
+            key={article.id}
+            className="flex flex-col w-full border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 my-10 mx-5"
+          >
+            <h2 className="text-lg font-semi-bold mb-5 border-green-600 border-l-2 pl-2">
+              {article.title}
+            </h2>
+            <p>{article.description}</p>
+            <a
+              href={article.url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex text-red-600 mt-5"
+            >
+              read more{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 ml-1"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                />
+              </svg>
+            </a>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-end">
+        {startIndex > 0 && (
+          <button
+            onClick={handlePrev}
+            className="bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+          >
+            Prev
+          </button>
+        )}
+        {startIndex + 4 < blogPostsRaw.length && (
+          <button
+            onClick={handleNext}
+            className="bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+          >
+            Next
+          </button>
+        )}
+      </div>
+    </section>
+  );
+
+  useEffect(() => {
+    (async () => {
+      const url = "https://dev.to/api/articles?username=mubbashir10";
+      const res = await fetch(url);
+      const body = await res.json();
+      setBlogPostsRaw(body);
+    })();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center py-24 px-5">
@@ -103,32 +208,7 @@ export default function Home() {
             </p>
           </div>
         </section>
-        <section>
-          <p className="flex flex-col w-full border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 my-10">
-            <span className="flex font-bold text-2xl mb-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                className="w-7 h-7 text-orange-600"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
-                />
-              </svg>
-              Skills By Keywords
-            </span>
-            <code className="font-mono font-bold">
-              Full Stack Development, Solution Architecture, DevOps,
-              Scalaibility, Cloud Tranformation, Artifical Intelligence,
-              Platform and Infrastructure Engineering, Mobile App Development
-            </code>
-          </p>
-        </section>
+        {blogPosts}
         <hr />
         <section className="flex justify-center mt-10">
           <a
