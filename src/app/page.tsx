@@ -10,7 +10,7 @@ export default function Home() {
   const hoverGradient = `hover:from-orange-600 hover:to-violet-700`;
 
   const handleNext = () => {
-    if (startIndex + 4 < blogPostsRaw.length) {
+    if (startIndex + 3 < blogPostsRaw.length) {
       setStartIndex(startIndex + 1);
     }
   };
@@ -21,7 +21,7 @@ export default function Home() {
     }
   };
 
-  const visiblePosts = blogPostsRaw.slice(startIndex, startIndex + 4);
+  const visiblePosts = blogPostsRaw.slice(startIndex, startIndex + 3);
 
   const blogPosts = (
     <section className="my-10">
@@ -42,11 +42,11 @@ export default function Home() {
         </svg>
         Recent Blog Posts
       </h1>
-      <div className="flex">
+      <div className="flex flex-col">
         {visiblePosts.map((article) => (
           <div
             key={article.id}
-            className="flex flex-col w-full border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 my-10 mx-5"
+            className="flex flex-col w-full border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 my-3 p-3"
           >
             <h2 className="text-lg font-semi-bold mb-5 border-green-600 border-l-2 pl-2">
               {article.title}
