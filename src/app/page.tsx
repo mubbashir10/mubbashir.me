@@ -81,7 +81,7 @@ export default function Home() {
         {startIndex > 0 && (
           <button
             onClick={handlePrev}
-            className="bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+            className="bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded ml-3"
           >
             Prev
           </button>
@@ -89,7 +89,7 @@ export default function Home() {
         {startIndex + 4 < blogPostsRaw.length && (
           <button
             onClick={handleNext}
-            className="bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded"
+            className="bg-transparent hover:bg-green-500 text-green-700 hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded ml-3"
           >
             Next
           </button>
