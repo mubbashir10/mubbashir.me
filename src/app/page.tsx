@@ -133,10 +133,10 @@ export default function Home() {
             />
           </div>
           <a
-            href="mailto: mubbashir10@gmail.com"
+            href="mailto:hi@mubbashir.me"
             className={`text-white-400 text-2xl font-semibold mt-10 rounded-lg shadow p-4 max-w-2xl flex items-center ${defaultGradient} ${hoverGradient}`}
           >
-            Contact me{" "}
+            Contact:{" "} hi@mubbashir.me
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
